@@ -9,6 +9,7 @@ public class CameraStateNormal : CameraState
     [SerializeField] private float mouseSpeed = 1f;
     [SerializeField] private float size = 5f;
     [SerializeField] private float sizeSpeed = 1f;
+    
     private float screenX;
     private float screenY;
 

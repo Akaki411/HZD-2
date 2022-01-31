@@ -14,7 +14,7 @@ public class CameraStateMusicShake : CameraState
     [SerializeField] private Vector3 offset;
 
     private bool _sizing;
-    private float[] spectrum = new float[64];
+    [SerializeField] private float[] spectrum = new float[64];
 
     public override void Init()
     {
@@ -32,7 +32,7 @@ public class CameraStateMusicShake : CameraState
 
         if(spectrum[0] > kick)
         {
-            Kick();
+            Kick(spectrum[0]);
         }
 
         camera.transform.position = Vector3.Lerp(camera.transform.position, camera.purpose.transform.position + offset, speed);
@@ -43,8 +43,8 @@ public class CameraStateMusicShake : CameraState
         this.size = size;
     }
 
-    private void Kick()
+    private void Kick(float kick)
     {
-        camera.camera.orthographicSize = size - kickSize;
+        camera.camera.orthographicSize = size - kick;
     }
 }
