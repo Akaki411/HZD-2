@@ -4,33 +4,40 @@ using UnityEngine;
 
 public class Moving : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D _rigidbody;
-
     [Header("Бег / Ходьба")]
-    [SerializeField] float _speed = 1;
+    [SerializeField] private float _speed = 1;
 
     [Header("Прыжок")]
-    [SerializeField] float _jumpForce = 1;
+    [SerializeField] private float _jumpForce = 1;
+    [SerializeField] private Transform _footPosition;
+    [SerializeField] private LayerMask _whatIsGround;
+    [SerializeField] private float _groundDetectRadius;
 
+    [Header("Прочее")]
+    [SerializeField] private Rigidbody2D _rigidbody;
     
     private Vector2 _normal;
     private Vector2 directoinAlongSurface;
     private Vector2 offset;
 
+    private Collider2D hit;
+
     private float x = 0;
-
-
+    private bool _isGround;
 
     private void Update()
     {
         x = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && _isGround)
         {
             this.Jump();
         }
         
         this.Move();
+
+        hit = Physics2D.OverlapCircle(_footPosition.position, _groundDetectRadius, _whatIsGround);
+        _isGround = hit;
     }
 
     private void Move()
