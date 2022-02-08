@@ -24,13 +24,13 @@ public class CameraStateNormal : CameraState
 
     public override void Run()
     {
-        if (size != camera.camera.orthographicSize)
+        if (Mathf.Abs(camera.camera.orthographicSize - size) > 0.05f)
         {
             camera.camera.orthographicSize = Mathf.SmoothStep(camera.camera.orthographicSize, size, sizeSpeed);
         }
 
         mouse = new Vector3(Input.mousePosition.x - screenX, Input.mousePosition.y - screenY, 0f);
-
+        
         camera.transform.position = Vector3.Lerp(camera.transform.position, camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.deltaTime, speed);
     }
 
