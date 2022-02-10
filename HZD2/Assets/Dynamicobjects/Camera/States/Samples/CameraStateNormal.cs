@@ -9,12 +9,14 @@ public class CameraStateNormal : CameraState
     [SerializeField] private float mouseSpeed = 1f;
     [SerializeField] private float size = 5f;
     [SerializeField] private float sizeSpeed = 1f;
+    [SerializeField] private float _deadZone = 0.1f;
     
     private float screenX;
     private float screenY;
 
     [SerializeField] private Vector3 offset;
     private Vector3 mouse;
+    private Vector3 _newPosition;
 
     public override void Init()
     {
@@ -30,8 +32,9 @@ public class CameraStateNormal : CameraState
         }
 
         mouse = new Vector3(Input.mousePosition.x - screenX, Input.mousePosition.y - screenY, 0f);
+        _newPosition = camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.deltaTime;
         
-        camera.transform.position = Vector3.Lerp(camera.transform.position, camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.deltaTime, speed);
+        camera.transform.position = Vector3.Lerp(camera.transform.position, _newPosition, speed);
     }
 
     public override void ChangeSize(float size)
