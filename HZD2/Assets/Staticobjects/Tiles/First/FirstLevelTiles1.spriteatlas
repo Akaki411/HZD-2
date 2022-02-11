@@ -45,16 +45,11 @@ SpriteAtlas:
     packables:
     - {fileID: 2800000, guid: 808c236349dba2a4192689941103f6e9, type: 3}
     - {fileID: 2800000, guid: ad4ad10a384d470469e99d1afc2308bd, type: 3}
-    - {fileID: 2800000, guid: ad4b4ff293c197a45a35d26934f6e6b2, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: -5882170695943828418, guid: ad4b4ff293c197a45a35d26934f6e6b2, type: 3}
-  - {fileID: 6049605792901559095, guid: ad4b4ff293c197a45a35d26934f6e6b2, type: 3}
-  - {fileID: 8088830456793213489, guid: ad4b4ff293c197a45a35d26934f6e6b2, type: 3}
-  - {fileID: 7591774343886807129, guid: ad4b4ff293c197a45a35d26934f6e6b2, type: 3}
   - {fileID: -6869670291146096528, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: -8516345495937775485, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: 6784338809046258048, guid: 808c236349dba2a4192689941103f6e9, type: 3}
@@ -68,7 +63,6 @@ SpriteAtlas:
   - {fileID: 1443564750332069198, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: -3806162532323602321, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: -8545412037065336060, guid: 808c236349dba2a4192689941103f6e9, type: 3}
-  - {fileID: -7175739418622295597, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: 7495983346654974628, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: -7173353949435096347, guid: 808c236349dba2a4192689941103f6e9, type: 3}
   - {fileID: -6652236892558918455, guid: 808c236349dba2a4192689941103f6e9, type: 3}
@@ -90,10 +84,6 @@ SpriteAtlas:
   - {fileID: -4195856064741290969, guid: ad4ad10a384d470469e99d1afc2308bd, type: 3}
   - {fileID: 6981847899262029622, guid: ad4ad10a384d470469e99d1afc2308bd, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Water_1
-  - Water_0
-  - Water_3
-  - Water_2
   - FirstLevelTileSheet_25
   - FirstLevelTileSheet_24
   - FirstLevelTileSheet_27
@@ -107,7 +97,6 @@ SpriteAtlas:
   - FirstLevelTileSheet_7
   - FirstLevelTileSheet_6
   - FirstLevelTileSheet_1
-  - FirstLevelTileSheet_29
   - FirstLevelTileSheet_0
   - FirstLevelTileSheet_28
   - FirstLevelTileSheet_3

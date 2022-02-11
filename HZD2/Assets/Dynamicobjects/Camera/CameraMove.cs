@@ -22,7 +22,7 @@ public class CameraMove : MonoBehaviour
         currentState.Init();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         currentState.Run();
     }

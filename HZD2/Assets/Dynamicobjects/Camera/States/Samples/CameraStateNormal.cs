@@ -9,10 +9,11 @@ public class CameraStateNormal : CameraState
     [SerializeField] private float mouseSpeed = 1f;
     [SerializeField] private float size = 5f;
     [SerializeField] private float sizeSpeed = 1f;
-    [SerializeField] private float _deadZone = 0.1f;
+    
     
     private float screenX;
     private float screenY;
+    private float difference;
 
     [SerializeField] private Vector3 offset;
     private Vector3 mouse;
@@ -32,9 +33,13 @@ public class CameraStateNormal : CameraState
         }
 
         mouse = new Vector3(Input.mousePosition.x - screenX, Input.mousePosition.y - screenY, 0f);
-        _newPosition = camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.deltaTime;
-        
-        camera.transform.position = Vector3.Lerp(camera.transform.position, _newPosition, speed);
+        _newPosition = camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.fixedDeltaTime;
+        difference = Mathf.Abs(camera.transform.position.x - _newPosition.x) + Mathf.Abs(camera.transform.position.y - _newPosition.y);
+
+        if (difference > 0.05f)
+        {
+            camera.transform.position = Vector3.Lerp(camera.transform.position, _newPosition, speed);
+        }
     }
 
     public override void ChangeSize(float size)
