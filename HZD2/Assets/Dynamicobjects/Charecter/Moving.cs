@@ -26,7 +26,7 @@ public class Moving : MonoBehaviour
     private float x = 0;
     private bool _isGround;
 
-    private void Awake()
+    private void Start()
     {
         EventController.singleton.FlipRight += FlipRight;
         EventController.singleton.FlipLeft += FlipLeft;

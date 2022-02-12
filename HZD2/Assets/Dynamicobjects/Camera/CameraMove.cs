@@ -11,7 +11,6 @@ public class CameraMove : MonoBehaviour
     
     public GameObject purpose {get; private set;}
     public Camera mainCamera {get; private set;}
-    public float vel;
 
     private void Start()
     {
@@ -25,7 +24,6 @@ public class CameraMove : MonoBehaviour
     private void FixedUpdate()
     {
         currentState.Run();
-        vel = currentState.velocity.x;
     }
 
     public void Blackout()
@@ -65,5 +63,10 @@ public class CameraMove : MonoBehaviour
         }
         mainCamera.backgroundColor = _skyGradient.Evaluate(0);
         _colorPosition = 0;
+    }
+
+    public void SetSize(float size)
+    {
+        currentState.ChangeSize(size);
     }
 }

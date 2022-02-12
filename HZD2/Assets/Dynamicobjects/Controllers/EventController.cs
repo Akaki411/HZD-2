@@ -23,7 +23,7 @@ public class EventController : MonoBehaviour
     public event FlipLeftDelegate FlipLeft;
     public bool isRight;
 
-    private void Start()
+    private void Awake()
     {
         GameObject ec = GameObject.FindGameObjectWithTag("EventController");
         if (ec)
@@ -31,6 +31,7 @@ public class EventController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        singleton = this;
         gameObject.tag = "EventController";
         _halfWidth = Screen.width / 2;
         _halfHeight = Screen.height / 2;
