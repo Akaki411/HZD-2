@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class CameraState : ScriptableObject
 {
     [HideInInspector] public CameraMove camera {get; set;}
+    [HideInInspector] public Vector2 velocity = new Vector2(0, 0);
 
     public virtual void Init() { }
 

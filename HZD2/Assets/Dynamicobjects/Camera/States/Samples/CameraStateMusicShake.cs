@@ -8,7 +8,6 @@ public class CameraStateMusicShake : CameraState
     [SerializeField] private float speed = 1f;
     [SerializeField] private float size = 5f;
     [SerializeField] private float sizeSpeed = 1f;
-    [SerializeField] private float kickSize = 0.5f;
     [SerializeField] private float kick = 0.5f;
 
     [SerializeField] private Vector3 offset;
@@ -23,9 +22,9 @@ public class CameraStateMusicShake : CameraState
 
     public override void Run()
     {
-        if (size != camera.camera.orthographicSize)
+        if (size != camera.mainCamera.orthographicSize)
         {
-            camera.camera.orthographicSize = Mathf.SmoothStep(camera.camera.orthographicSize, size, sizeSpeed);
+            camera.mainCamera.orthographicSize = Mathf.SmoothStep(camera.mainCamera.orthographicSize, size, sizeSpeed);
         }
 
         AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.Blackman);
@@ -45,6 +44,6 @@ public class CameraStateMusicShake : CameraState
 
     private void Kick(float kick)
     {
-        camera.camera.orthographicSize = size - kick;
+        camera.mainCamera.orthographicSize = size - kick;
     }
 }

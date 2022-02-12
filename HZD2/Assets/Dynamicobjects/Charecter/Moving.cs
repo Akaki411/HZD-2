@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,12 @@ public class Moving : MonoBehaviour
 
     private float x = 0;
     private bool _isGround;
+
+    private void Awake()
+    {
+        EventController.singleton.FlipRight += FlipRight;
+        EventController.singleton.FlipLeft += FlipLeft;
+    }
 
     private void Update()
     {

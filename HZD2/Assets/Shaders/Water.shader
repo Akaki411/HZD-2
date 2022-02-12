@@ -3,6 +3,7 @@ Shader "Sprites/Water"
     Properties
     {
         _Intensity ("Intensity", Range(0, 0.4)) = 0.1
+        _Speed ("Simulation speed", Range(0.1, 5)) = 1
         _Color ("Color", Color) = (1, 1, 1, 1)
         _MainTex("Texture", 2D) = "white" {}
     }
@@ -26,6 +27,7 @@ Shader "Sprites/Water"
         };
 
         half _Intensity;
+        fixed _Speed;
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
@@ -39,8 +41,8 @@ Shader "Sprites/Water"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed2 uv = IN.uv_MainTex;
-            uv.y += sin(uv.x * 6.3 + _Time.y) * _Intensity;
-            uv.x += sin(uv.y * 6.3 + _Time.y) * _Intensity;
+            uv.y += sin(uv.x * 6.3 + _Time.y * _Speed) * _Intensity;
+            uv.x += sin(uv.y * 6.3 + _Time.y * _Speed) * _Intensity;
             fixed4 c = tex2D (_MainTex, uv) * _Color;
             o.Albedo = c.rgb;
 

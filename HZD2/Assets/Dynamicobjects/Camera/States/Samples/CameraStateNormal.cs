@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,6 @@ public class CameraStateNormal : CameraState
     
     private float screenX;
     private float screenY;
-    private float difference;
 
     [SerializeField] private Vector3 offset;
     private Vector3 mouse;
@@ -27,18 +27,19 @@ public class CameraStateNormal : CameraState
 
     public override void Run()
     {
-        if (Mathf.Abs(camera.camera.orthographicSize - size) > 0.05f)
+        if (Mathf.Abs(camera.mainCamera.orthographicSize - size) > 0.01f)
         {
-            camera.camera.orthographicSize = Mathf.SmoothStep(camera.camera.orthographicSize, size, sizeSpeed);
+            camera.mainCamera.orthographicSize = Mathf.SmoothStep(camera.mainCamera.orthographicSize, size, sizeSpeed);
         }
 
         mouse = new Vector3(Input.mousePosition.x - screenX, Input.mousePosition.y - screenY, 0f);
         _newPosition = camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.fixedDeltaTime;
-        difference = Mathf.Abs(camera.transform.position.x - _newPosition.x) + Mathf.Abs(camera.transform.position.y - _newPosition.y);
-
-        if (difference > 0.05f)
+        velocity.x = Mathf.Lerp(_newPosition.x, camera.transform.position.x, speed);
+        velocity.y = Mathf.Lerp(_newPosition.y, camera.transform.position.y, speed);
+        
+        if (Mathf.Abs(velocity.x) + Mathf.Abs(velocity.y) > 0.05f)
         {
-            camera.transform.position = Vector3.Lerp(camera.transform.position, _newPosition, speed);
+            camera.transform.position = new Vector3(velocity.x, velocity.y, offset.z);
         }
     }
 

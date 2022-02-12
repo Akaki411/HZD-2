@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
@@ -11,11 +10,12 @@ public class CameraMove : MonoBehaviour
     private float _colorPosition = 0;
     
     public GameObject purpose {get; private set;}
-    public Camera camera {get; private set;}
+    public Camera mainCamera {get; private set;}
+    public float vel;
 
     private void Start()
     {
-        camera = GetComponent<Camera>();
+        mainCamera = GetComponent<Camera>();
         purpose = GameObject.FindGameObjectsWithTag("Player")[0];
         currentState = normalState;
         currentState.camera = this;
@@ -25,6 +25,7 @@ public class CameraMove : MonoBehaviour
     private void FixedUpdate()
     {
         currentState.Run();
+        vel = currentState.velocity.x;
     }
 
     public void Blackout()
@@ -37,15 +38,20 @@ public class CameraMove : MonoBehaviour
         StartCoroutine(SetBGColorDark());
     }
 
+    public Vector2 GetCameraVelocity()
+    {
+        return currentState.velocity;
+    }
+
     private IEnumerator SetBGColorLight()
     {
         for(float i = _colorPosition; i <= 1f; i += _changeColorSpeed)
         {
-            camera.backgroundColor = _skyGradient.Evaluate(i);
+            mainCamera.backgroundColor = _skyGradient.Evaluate(i);
             _colorPosition = i;
             yield return null;
         }
-        camera.backgroundColor = _skyGradient.Evaluate(1);
+        mainCamera.backgroundColor = _skyGradient.Evaluate(1);
         _colorPosition = 1f;
     }
 
@@ -53,11 +59,11 @@ public class CameraMove : MonoBehaviour
     {
         for(float i = _colorPosition; i >= 0; i -= _changeColorSpeed)
         {
-            camera.backgroundColor = _skyGradient.Evaluate(i);
+            mainCamera.backgroundColor = _skyGradient.Evaluate(i);
             _colorPosition = i;
             yield return null;
         }
-        camera.backgroundColor = _skyGradient.Evaluate(0);
+        mainCamera.backgroundColor = _skyGradient.Evaluate(0);
         _colorPosition = 0;
     }
 }
