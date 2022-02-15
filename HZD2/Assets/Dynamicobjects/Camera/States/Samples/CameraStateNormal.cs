@@ -16,6 +16,7 @@ public class CameraStateNormal : CameraState
     private float screenY;
 
     [SerializeField] private Vector3 offset;
+    private Vector2 newPos;
     private Vector3 mouse;
     private Vector3 _newPosition;
 
@@ -34,12 +35,14 @@ public class CameraStateNormal : CameraState
 
         mouse = new Vector3(Input.mousePosition.x - screenX, Input.mousePosition.y - screenY, 0f);
         _newPosition = camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.fixedDeltaTime;
-        velocity.x = Mathf.Lerp(_newPosition.x, camera.transform.position.x, speed);
-        velocity.y = Mathf.Lerp(_newPosition.y, camera.transform.position.y, speed);
+        newPos.x = Mathf.Lerp(_newPosition.x, camera.transform.position.x, speed);
+        newPos.y = Mathf.Lerp(_newPosition.y, camera.transform.position.y, speed);
+
+        velocity = _newPosition.x - camera.transform.position.x;
         
-        if (Mathf.Abs(velocity.x) + Mathf.Abs(velocity.y) > 0.05f)
+        if (Mathf.Abs(newPos.x) + Mathf.Abs(newPos.y) > 0.05f)
         {
-            camera.transform.position = new Vector3(velocity.x, velocity.y, offset.z);
+            camera.transform.position = new Vector3(newPos.x, newPos.y, offset.z);
         }
     }
 

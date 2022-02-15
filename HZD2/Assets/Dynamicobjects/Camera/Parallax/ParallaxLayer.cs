@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ParallaxLayer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float _speed;
+    private float _velocity;
+    private void FixedUpdate()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _velocity = CameraMove.singleton.GetCameraVelocity();
+        if(Mathf.Abs(_velocity) > 0.001)
+        {
+            transform.position = new Vector2(transform.position.x + _velocity * _speed, transform.position.y);
+        }
     }
 }

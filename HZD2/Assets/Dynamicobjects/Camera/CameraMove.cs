@@ -11,14 +11,14 @@ public class CameraMove : MonoBehaviour
     
     public GameObject purpose {get; private set;}
     public Camera mainCamera {get; private set;}
+    public static CameraMove singleton { get; private set; }
 
     private void Start()
     {
         mainCamera = GetComponent<Camera>();
         purpose = GameObject.FindGameObjectsWithTag("Player")[0];
-        currentState = normalState;
-        currentState.camera = this;
-        currentState.Init();
+        singleton = this;
+        SetState(normalState);
     }
 
     private void FixedUpdate()
@@ -36,7 +36,7 @@ public class CameraMove : MonoBehaviour
         StartCoroutine(SetBGColorDark());
     }
 
-    public Vector2 GetCameraVelocity()
+    public float GetCameraVelocity()
     {
         return currentState.velocity;
     }
@@ -63,6 +63,13 @@ public class CameraMove : MonoBehaviour
         }
         mainCamera.backgroundColor = _skyGradient.Evaluate(0);
         _colorPosition = 0;
+    }
+
+    private void SetState(CameraState state)
+    {
+        currentState = state;
+        currentState.camera = this;
+        currentState.Init();
     }
 
     public void SetSize(float size)
