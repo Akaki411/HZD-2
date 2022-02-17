@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EventController : MonoBehaviour
@@ -22,6 +20,12 @@ public class EventController : MonoBehaviour
     public delegate void FlipLeftDelegate();
     public event FlipLeftDelegate FlipLeft;
     public bool isRight;
+    
+    //Run
+    public delegate void StartRunDelegate();
+    public event StartRunDelegate StartRun;
+    public delegate void StopRunDelegate();
+    public event StopRunDelegate StopRun;
 
     private void Awake()
     {
@@ -53,6 +57,15 @@ public class EventController : MonoBehaviour
         {
             FlipLeft?.Invoke();
             isRight = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            StartRun?.Invoke();
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            StopRun?.Invoke();
         }
     }
 }

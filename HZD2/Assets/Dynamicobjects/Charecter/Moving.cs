@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Moving : MonoBehaviour
 {
     [Header("Бег / Ходьба")]
     [SerializeField] private float _speed = 1;
+
+    [SerializeField] private float _runFactor = 0.6f;
 
     [Header("Прыжок")]
     [SerializeField] private float _jumpForce = 1;
@@ -30,6 +29,8 @@ public class Moving : MonoBehaviour
     {
         EventController.singleton.FlipRight += FlipRight;
         EventController.singleton.FlipLeft += FlipLeft;
+        EventController.singleton.StartRun += StartRun;
+        EventController.singleton.StopRun += StopRun;
     }
 
     private void Update()
@@ -49,12 +50,22 @@ public class Moving : MonoBehaviour
 
     private void Move()
     {
-        _rigidbody.velocity = new Vector2(x * _speed, _rigidbody.velocity.y);
+        _rigidbody.velocity = new Vector2(x * _speed * _runFactor, _rigidbody.velocity.y);
     }
 
     private void Jump()
     {
         _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
+    }
+
+    private void StartRun()
+    {
+        _runFactor = 1;
+    }
+    
+    private void StopRun()
+    {
+        _runFactor = 0.6f;
     }
 
     private void FlipLeft()
