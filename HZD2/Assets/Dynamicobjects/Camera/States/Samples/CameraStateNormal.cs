@@ -3,12 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CameraState", menuName = "Camera/NormalState")]
 public class CameraStateNormal : CameraState
 {
+    [SerializeField] private Vector2 _verticalBorder;
+    [SerializeField] private Vector2 _horizontalBorder;
+    
     [SerializeField] private float speed = 1f;
     [SerializeField] private float mouseSpeed = 1f;
-    [SerializeField] private float size = 5f;
-    [SerializeField] private float sizeSpeed = 1f;
-    
-    
+
     private float screenX;
     private float screenY;
 
@@ -25,26 +25,23 @@ public class CameraStateNormal : CameraState
 
     public override void Run()
     {
-        if (Mathf.Abs(camera.mainCamera.orthographicSize - size) > 0.01f)
-        {
-            camera.mainCamera.orthographicSize = Mathf.SmoothStep(camera.mainCamera.orthographicSize, size, sizeSpeed);
-        }
-
         mouse = new Vector3(Input.mousePosition.x - screenX, Input.mousePosition.y - screenY, 0f);
         _newPosition = camera.purpose.transform.position + offset + mouse * mouseSpeed * Time.fixedDeltaTime;
         newPos.x = Mathf.Lerp(_newPosition.x, camera.transform.position.x, speed);
         newPos.y = Mathf.Lerp(_newPosition.y, camera.transform.position.y, speed);
 
-        velocity = _newPosition.x - camera.transform.position.x;
+        if (camera.transform.position.x != _horizontalBorder.x && camera.transform.position.x != _horizontalBorder.y)
+        {
+            velocity = _newPosition.x - camera.transform.position.x;
+        }
+        else
+        {
+            velocity = 0;
+        }
         
         if (Mathf.Abs(newPos.x) + Mathf.Abs(newPos.y) > 0.05f)
         {
-            camera.transform.position = new Vector3(newPos.x, newPos.y, offset.z);
+            camera.transform.position = new Vector3(Mathf.Clamp(newPos.x, _horizontalBorder.x, _horizontalBorder.y), Mathf.Clamp(newPos.y, _verticalBorder.x, _verticalBorder.y), offset.z);
         }
-    }
-
-    public override void ChangeSize(float size)
-    {
-        this.size = size;
     }
 }

@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class EventController : MonoBehaviour
 {
     public static EventController singleton { get; private set; }
     
     //***Mouse***
-    public Vector2 mousePosition = new Vector2(0, 0);
+    [HideInInspector] public Vector2 mousePosition = new Vector2(0, 0);
     private float _halfWidth;
     private float _halfHeight;
     
@@ -19,13 +21,17 @@ public class EventController : MonoBehaviour
     public event FlipRightDelegate FlipRight;
     public delegate void FlipLeftDelegate();
     public event FlipLeftDelegate FlipLeft;
-    public bool isRight;
+    [HideInInspector] public bool isRight;
     
     //Run
     public delegate void StartRunDelegate();
     public event StartRunDelegate StartRun;
     public delegate void StopRunDelegate();
     public event StopRunDelegate StopRun;
+    
+    //UI
+    public UnityEvent<bool> openMenu;
+    private bool menuOpened = false;
 
     private void Awake()
     {
@@ -67,5 +73,20 @@ public class EventController : MonoBehaviour
         {
             StopRun?.Invoke();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            openMenu.Invoke(!menuOpened);
+            menuOpened = !menuOpened;
+        }
+    }
+
+    public void LoadScene(int num)
+    {
+        SceneManager.LoadScene(num);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

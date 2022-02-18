@@ -6,8 +6,10 @@ public class CameraMove : MonoBehaviour
     [SerializeField] private CameraState normalState;
     [SerializeField] private Gradient _skyGradient;
     [SerializeField] private float _changeColorSpeed = 0.05f;
+    [SerializeField] private float _changeSizeSpeed = 1;
     private CameraState currentState;
     private float _colorPosition = 0;
+    private float _currentSize = 5;
     
     public GameObject purpose {get; private set;}
     public Camera mainCamera {get; private set;}
@@ -74,6 +76,18 @@ public class CameraMove : MonoBehaviour
 
     public void SetSize(float size)
     {
-        currentState.ChangeSize(size);
+        StartCoroutine(ChangeSize(size));
+    }
+
+    private IEnumerator ChangeSize(float size)
+    {
+        _currentSize = size;
+        while (Mathf.Abs(_currentSize - mainCamera.orthographicSize) > 0.01f)
+        {
+            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, _currentSize, _changeSizeSpeed);
+            yield return null;
+        }
+
+        mainCamera.orthographicSize = _currentSize;
     }
 }
